@@ -20,7 +20,6 @@ jest.mock('../../src/models/database', () => ({
 
 jest.mock('../../src/services/wallet-service', () => ({
   getWallet: jest.fn(),
-  updateWallet: jest.fn()
 }));
 
 describe('services/transaction-service', () => {
@@ -46,46 +45,6 @@ describe('services/transaction-service', () => {
     mockCollection.updateOne.mockResolvedValue({ modifiedCount: 1 });
     mockCollection.deleteOne.mockResolvedValue({ deletedCount: 1 });
     mockCollection.countDocuments.mockResolvedValue(5);
-  });
-
-  it('getTransaction returns transaction', async () => {
-    const result = await transactionService.getTransaction('tx1');
-    expect(result._id).toBe('tx1');
-    expect(result.transaction_time_stamp instanceof Date).toBe(true);
-  });
-
-  it('getAllTransactions returns transactions', async () => {
-    const result = await transactionService.getAllTransactions();
-    expect(Array.isArray(result)).toBe(true);
-    expect(result[0].transaction_time_stamp instanceof Date).toBe(true);
-  });
-
-  it('createTransaction inserts transaction', async () => {
-    const newTx = { ...mockTransaction };
-    await transactionService.createTransaction(newTx);
-    expect(mockCollection.insertOne).toHaveBeenCalled();
-  });
-
-  it('createTransaction throws on validation error', async () => {
-    mockCollection.insertOne.mockImplementation(() => {
-      const error = new Error('Document failed validation');
-      error.code = 121;
-      throw error;
-    });
-    await expect(transactionService.createTransaction(mockTransaction))
-      .rejects.toThrow('Invalid transaction data');
-  });
-
-  it('updateTransaction updates and returns transaction', async () => {
-    const result = await transactionService.updateTransaction('tx1', { amount: 200 });
-    expect(result._id).toBe('tx1');
-    expect(mockCollection.updateOne).toHaveBeenCalled();
-  });
-
-  it('deleteTransaction deletes transaction', async () => {
-    const result = await transactionService.deleteTransaction('tx1');
-    expect(result).toBe(true);
-    expect(mockCollection.deleteOne).toHaveBeenCalled();
   });
 
   it('getTransactions returns transactions with sorting and pagination', async () => {

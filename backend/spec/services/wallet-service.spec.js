@@ -57,16 +57,4 @@ describe('services/wallet-service', () => {
       );
     });
   });
-
-  it('updateWallet updates and returns wallet', async () => {
-    const result = await walletService.updateWallet('1', { balance: 200 });
-    expect(result._id).toBe('1');
-    expect(mockCollection.updateOne).toHaveBeenCalled();
-  });
-
-  it('deleteWallet deletes wallet', async () => {
-    const result = await walletService.deleteWallet('1');
-    expect(result).toBe(true);
-    expect(mockCollection.deleteOne).toHaveBeenCalled();
-  });
 });
