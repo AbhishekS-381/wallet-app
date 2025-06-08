@@ -1,0 +1,124 @@
+import { r as registerInstance, d as createEvent, h } from './index-BPmV3ait.js';
+import { A as API_BASE_URL } from './config-C9HfB2Xj.js';
+
+const walletDashboardCss = ":host{display:flex;flex-direction:column;align-items:center;min-height:100vh;background:#f7f9fb;font-family:'Inter', 'Segoe UI', Arial, sans-serif}.wallet-card{background:#fff;border-radius:18px;box-shadow:0 2px 16px rgba(37,99,235,0.08);padding:2.5rem 2rem;width:100%;max-width:400px;min-width:0;box-sizing:border-box;display:flex;flex-direction:column;align-items:center}@media (max-width: 900px){.wallet-card{max-width:90vw;padding:2rem 1rem}}@media (max-width: 600px){.wallet-card{padding:1.2rem 0.5rem;max-width:100vw;min-width:0;border-radius:12px}h2{font-size:1.3rem}.balance-box{padding:0.8rem 0.5rem;font-size:1rem}form{gap:0.7rem}input[type=\"number\"],input[type=\"text\"],.submit-btn,.view-transactions-btn{font-size:0.95rem;padding:0.7rem 0.7rem}}@media (max-width: 400px){.wallet-card{padding:0.7rem 0.2rem 0.7rem 0.2rem}.balance-box{padding:0.5rem 0.2rem;font-size:0.95rem}}.card{background:#fff;border-radius:1.25rem;box-shadow:0 2px 16px 0 rgba(37,99,235,0.08);padding:2rem 1.5rem;margin:0 auto;max-width:400px;width:100%;min-width:360px;box-sizing:border-box}@media (max-width: 500px){.card{padding:1.5rem 0.5rem;max-width:100vw;min-width:0}}h2{font-size:2rem;font-weight:700;margin:0 0 1.5rem 0;color:#000000;text-align:center}h2 span{color:#2563eb}.balance-box{background:#f0f9ff;color:#0369a1;padding:1rem 2rem;border-radius:12px;font-size:1.1rem;font-weight:500;margin-bottom:2rem;width:100%;text-align:center;box-sizing:border-box}form{width:100%;display:flex;flex-direction:column;gap:1.1rem;margin-bottom:1.2rem}input[type=\"number\"],input[type=\"text\"],.submit-btn,.view-transactions-btn{width:100%;box-sizing:border-box}input[type=\"number\"],input[type=\"text\"]{padding:0.8rem 1rem;border:1.5px solid #cbd5e1;border-radius:8px;font-size:1rem;background:#fff;width:100%;box-sizing:border-box}input[type=\"number\"]:focus,input[type=\"text\"]:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,0.12)}.toggle-row{display:flex;align-items:center;gap:1rem;margin:0.5rem 0}.toggle-info{color:#64748b;font-size:0.95rem}.toggle-switch{position:relative;display:inline-block;width:50px;height:26px}.toggle-switch input{opacity:0;width:0;height:0}.toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#e11d48;transition:.3s;border-radius:26px}.toggle-slider:before{position:absolute;content:\"\";height:18px;width:18px;left:4px;bottom:4px;background-color:white;transition:.3s;border-radius:50%}input:checked+.toggle-slider{background-color:#2563eb}input:checked+.toggle-slider:before{transform:translateX(24px)}.toggle-label{font-size:0.9rem;font-weight:500}.toggle-label.credit{color:#2563eb}.toggle-label.debit{color:#e11d48}.submit-btn{background:#2563eb;color:white;border:none;padding:0.8rem;border-radius:8px;font-size:1rem;font-weight:500;cursor:pointer;width:100%;margin-top:0.5rem}.submit-btn:hover{background:#1d4ed8}.submit-btn:disabled{background:#94a3b8;cursor:not-allowed}.view-transactions-btn{background:none;border:1.5px solid #2563eb;color:#2563eb;padding:0.8rem;border-radius:8px;font-size:0.95rem;font-weight:500;cursor:pointer;width:100%;margin-top:1rem;transition:all 0.2s}.view-transactions-btn:hover{background:#eff6ff}.error{color:#e11d48;font-size:0.9rem;margin-top:1rem;text-align:center}.wallet-card.loading{align-items:center;justify-content:center;gap:1.5rem;min-height:200px}.wallet-card.error{align-items:center;justify-content:center;min-height:200px;color:#ef4444;text-align:center}.loading-spinner{width:40px;height:40px;border:3px solid #f3f3f3;border-top:3px solid #2563eb;border-radius:50%;animation:spin 1s linear infinite}@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}";
+
+const WalletDashboard = class {
+    constructor(hostRef) {
+        registerInstance(this, hostRef);
+        this.showTransactions = createEvent(this, "showTransactions", 7);
+        this.notificationChange = createEvent(this, "notificationChange", 7);
+    }
+    walletId;
+    showTransactions;
+    notificationChange;
+    wallet = null;
+    amount = '';
+    description = '';
+    isCredit = true;
+    loading = false;
+    loadingWallet = false;
+    async componentWillLoad() {
+        if (this.walletId) {
+            return this.fetchWallet();
+        }
+    }
+    async walletIdChanged(newValue, oldValue) {
+        if (newValue && newValue !== oldValue) {
+            await this.fetchWallet();
+        }
+    }
+    async fetchWallet() {
+        if (!this.walletId)
+            return;
+        this.loadingWallet = true;
+        try {
+            const res = await fetch(`${API_BASE_URL}/wallet/${this.walletId}`);
+            if (!res.ok) {
+                throw new Error(await res.text() || 'Network error');
+            }
+            const wallet = await res.json();
+            this.wallet = {
+                id: wallet.id || wallet._id, // Support both id and _id
+                balance: wallet.balance,
+                name: wallet.name,
+                date: wallet.date ? new Date(wallet.date) : undefined,
+            };
+        }
+        catch (err) {
+            console.error('Wallet fetch error:', err);
+            this.notificationChange.emit({
+                message: err instanceof Error ? err.message : 'Error loading wallet',
+                type: 'error'
+            });
+            this.wallet = null;
+        }
+        finally {
+            this.loadingWallet = false;
+        }
+    }
+    async handleTransaction(e) {
+        e.preventDefault();
+        if (!this.amount) {
+            this.notificationChange.emit({ message: 'Amount is required', type: 'error' });
+            return;
+        }
+        // Require amount > 0
+        if (parseFloat(this.amount) <= 0) {
+            this.notificationChange.emit({ message: 'Amount must be greater than 0', type: 'error' });
+            return;
+        }
+        this.loading = true;
+        try {
+            const amt = parseFloat(this.amount) * (this.isCredit ? 1 : -1);
+            const res = await fetch(`${API_BASE_URL}/transact/${this.walletId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ amount: amt, description: this.description }),
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                this.notificationChange.emit({ message: data.error || 'Transaction failed', type: 'error' });
+                return;
+            }
+            // Update wallet balance from response
+            if (this.wallet) {
+                this.wallet.balance = data.balance;
+            }
+            this.amount = '';
+            this.description = '';
+            this.notificationChange.emit({ message: 'Transaction successful!', type: 'success' });
+        }
+        catch (err) {
+            this.notificationChange.emit({ message: 'Error processing transaction', type: 'error' });
+        }
+        finally {
+            this.loading = false;
+        }
+    }
+    render() {
+        if (this.loadingWallet) {
+            return (h("div", { class: "wallet-card loading" }, h("div", { class: "loading-spinner" }), h("p", null, "Loading wallet details...")));
+        }
+        if (!this.wallet) {
+            return (h("div", { class: "wallet-card error" }, h("p", null, "Could not load wallet details. Please try again.")));
+        }
+        return (h("div", { class: "wallet-card" }, h("h2", null, "Welcome, ", h("span", null, this.wallet.name)), h("div", { class: "balance-box" }, "Balance: ", this.wallet.balance.toFixed(4)), h("form", { onSubmit: e => this.handleTransaction(e) }, h("input", { type: "number", step: "0.0001", min: "0.0001", pattern: "^\\\\d*\\\\.?\\\\d{0,4}$", onInput: e => {
+                const value = e.target.value;
+                const parts = value.split('.');
+                if (parts[1] && parts[1].length > 4) {
+                    e.target.value = `${parts[0]}.${parts[1].slice(0, 4)}`;
+                }
+                this.amount = e.target.value;
+            }, value: this.amount, placeholder: "Amount", required: true }), h("input", { type: "text", value: this.description, onInput: e => this.description = e.target.value, placeholder: "Description" }), h("div", { class: "toggle-row" }, h("span", { class: "toggle-info" }, "Select transaction type"), h("label", { class: "toggle-switch" }, h("input", { type: "checkbox", checked: this.isCredit, onChange: () => this.isCredit = !this.isCredit }), h("span", { class: "toggle-slider" })), h("span", { class: "toggle-label " + (this.isCredit ? "credit" : "debit") }, this.isCredit ? 'Credit' : 'Debit')), h("button", { class: "submit-btn", type: "submit", disabled: this.loading }, this.loading ? 'Processing...' : 'Submit')), h("button", { class: "view-transactions-btn", onClick: () => this.showTransactions.emit() }, "View Transactions")));
+    }
+    static get watchers() { return {
+        "walletId": ["walletIdChanged"]
+    }; }
+};
+WalletDashboard.style = walletDashboardCss;
+
+export { WalletDashboard as wallet_dashboard };
+//# sourceMappingURL=wallet-dashboard.entry.esm.js.map
+
+//# sourceMappingURL=wallet-dashboard.entry.js.map

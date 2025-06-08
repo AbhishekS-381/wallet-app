@@ -1,0 +1,9 @@
+{
+  "env": {
+    "jest": true
+  },
+  "rules": {
+    "space-before-function-paren": "off",
+    "no-undef": "off"
+  }
+}

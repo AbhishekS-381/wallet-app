@@ -1,0 +1,153 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f7f9fb;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+html, body {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  width: 100%;
+  max-width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  box-sizing: border-box;
+}
+
+header {
+  position: relative;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  max-width: 100vw;
+  min-width: 0;
+  overflow-x: hidden;
+  background: #2563eb;
+  color: #fff;
+  padding: 1.5rem 0;
+  text-align: center;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  z-index: 100;
+}
+
+header h1 {
+  font-size: 2.1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80%;
+  width: 100vw;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 1rem;
+}
+
+@media (max-width: 900px) {
+  header h1 {
+    font-size: 1.5rem;
+  }
+  main {
+    padding: 0 0.5rem;
+  }
+}
+@media (max-width: 600px) {
+  header {
+    padding: 1rem 0.2rem;
+    font-size: 1.3rem;
+  }
+  header h1 {
+    font-size: 1.1rem;
+  }
+  main {
+    padding: 0 0.2rem;
+  }
+}
+
+:host, .theme-light {
+  --bg: #f7f9fb;
+  --text: #111827;
+  --header-bg: #2563eb;
+  --header-text: #fff;
+  --card-bg: #fff;
+  --card-shadow: 0 2px 16px rgba(37,99,235,0.08);
+  --input-bg: #fff;
+  --input-border: #cbd5e1;
+  --input-focus: #2563eb;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --danger: #e11d48;
+  --card-radius: 18px;
+}
+.theme-dark {
+  --bg: #181a1b;
+  --text: #f3f4f6;
+  --header-bg: #2563eb;
+  --header-text: #e0e7ef;
+  --card-bg: #23272f;
+  --card-shadow: 0 2px 16px rgba(0,0,0,0.25);
+  --input-bg: #23272f;
+  --input-border: #374151;
+  --input-focus: #2563eb;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --danger: #e11d48;
+  --card-radius: 18px;
+}
+:host, body, html {
+  background: var(--bg) !important;
+  color: var(--text);
+}
+header {
+  background: var(--header-bg);
+  color: var(--header-text);
+}
+.wallet-card, .card, .transactions-container {
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  color: var(--text);
+}
+input[type="number"], input[type="text"] {
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  color: var(--text);
+}
+input[type="number"]:focus, input[type="text"]:focus {
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+}
+.submit-btn {
+  background: var(--primary);
+  color: #fff;
+}
+.submit-btn:hover {
+  background: var(--primary-hover);
+}
+.view-transactions-btn {
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+}
+.view-transactions-btn:hover {
+  background: #eff6ff;
+}
+.error {
+  color: var(--danger);
+}

@@ -1,0 +1,43 @@
+{
+  "name": "wallet-app",
+  "version": "0.0.1",
+  "description": "Stencil Component Starter",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/wallet-app/wallet-app.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/wallet-app/wallet-app.esm.js",
+      "require": "./dist/wallet-app/wallet-app.cjs.js"
+    },
+    "./loader": {
+      "import": "./loader/index.js",
+      "require": "./loader/index.cjs",
+      "types": "./loader/index.d.ts"
+    }
+  },
+  "files": [
+    "dist/",
+    "loader/"
+  ],
+  "scripts": {
+    "start": "stencil build --dev --watch --serve",
+    "build": "stencil build",
+    "test": "stencil test",
+    "test:watch": "stencil test --watch",
+    "lint": "eslint src/**/*.ts src/**/*.tsx",
+    "lint:fix": "eslint src/**/*.ts src/**/*.tsx --fix",
+    "serve": "stencil serve",
+    "predeploy": "npm run build",
+    "deploy": "npx gh-pages -d www"
+  },
+  "devDependencies": {
+    "@stencil/core": "^4.33.1",
+    "@types/node": "^22.13.5",
+    "gh-pages": "^6.0.0"
+  },
+  "license": "MIT"
+}
