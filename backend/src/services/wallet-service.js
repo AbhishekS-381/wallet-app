@@ -64,27 +64,7 @@ async function createWallet({ name, balance }) {
   }
 }
 
-async function updateWallet(id, update) {
-  // Ensure balance and date are stored as string/double if present
-  const setUpdate = { ...update };
-
-  if (setUpdate.balance !== undefined) {
-    setUpdate.balance = round4(setUpdate.balance);
-  }
-
-  setUpdate.updated_at = getCurrentDate();
-  await database.getDb().collection(collectionName.wallet).updateOne({ _id: id }, { $set: setUpdate });
-  return await database.getDb().collection(collectionName.wallet).findOne({ _id: id });
-}
-
-async function deleteWallet(id) {
-  await database.getDb().collection(collectionName.wallet).deleteOne({ _id: id });
-  return true;
-}
-
 module.exports = {
   getWallet,
   createWallet,
-  updateWallet,
-  deleteWallet,
 };
