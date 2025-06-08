@@ -89,6 +89,8 @@ wallet-app/
   - Hosted at: https://wallet-app-wlvr.onrender.com/ (API base URL)
   - Dockerfile provided for containerized deployment
 
+> **Note:** The application is hosted on a free subscription-based server. On periods of inactivity, the backend service may shut down or go to sleep. If you encounter network errors or 404 errors when using the app, first visit the health endpoint of the backend (e.g., https://wallet-app-wlvr.onrender.com/health) in your browser. Wait a few moments for the server to spin up, then try using the Wallet App again.
+
 ---
 
 ## Documentation
