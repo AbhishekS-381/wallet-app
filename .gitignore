@@ -9,6 +9,7 @@ frontend/wallet-app/dist/
 frontend/wallet-app/.stencil/
 frontend/wallet-app/.cache/
 frontend/wallet-app/coverage/
+frontend/wallet-app/package-lock.json
 
 # Backend
 backend/coverage/
@@ -16,6 +17,7 @@ backend/node_modules/
 backend/.env
 backend/.cache/
 backend/coverage/
+backend/package-lock.json
 
 # OS
 .DS_Store
@@ -26,3 +28,4 @@ Thumbs.db
 *.env.*
 *.local
 to-do.md
+package-lock.json

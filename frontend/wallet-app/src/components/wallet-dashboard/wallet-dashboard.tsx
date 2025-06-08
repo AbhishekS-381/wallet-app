@@ -42,7 +42,7 @@ export class WalletDashboard {
       }
       const wallet = await res.json();
       this.wallet = {
-        id: wallet.id || wallet._id, // Support both id and _id
+        id: wallet.id || wallet._id,
         balance: wallet.balance,
         name: wallet.name,
         date: wallet.date ? new Date(wallet.date) : undefined,
