@@ -1,0 +1,22 @@
+{
+  "/setup": {
+    "target": "http://localhost:3001",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/transact": {
+    "target": "http://localhost:3001",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/transactions": {
+    "target": "http://localhost:3001",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/wallet": {
+    "target": "http://localhost:3001",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

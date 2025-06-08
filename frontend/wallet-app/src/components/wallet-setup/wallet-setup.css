@@ -1,0 +1,81 @@
+.card {
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 16px 0 rgba(37,99,235,0.08);
+  padding: 2rem 1.5rem;
+  margin: 0 auto;
+  max-width: 400px;
+  width: 100%;
+  min-width: 360px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 500px) {
+  .card {
+    padding: 1.5rem 0.5rem;
+    max-width: 100vw;
+    min-width: 0;
+  }
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+  color: #2563eb;
+  text-align: center;
+}
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-bottom: 1.2rem;
+}
+input[type="number"],
+input[type="text"] {
+  padding: 0.6rem 0.8rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 7px;
+  font-size: 1rem;
+  background: #f8fafc;
+  color: #22223b;
+  margin-bottom: 0.2rem;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.submit-btn {
+  width: 100%;
+  padding: 0.7rem 0;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.7rem;
+  transition: background 0.2s;
+}
+.submit-btn:disabled {
+  background: #cbd5e1;
+  color: #64748b;
+  cursor: not-allowed;
+}
+.submit-btn:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+.error {
+  color: #e11d48;
+  background: #fef2f2;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  margin-top: 1rem;
+  font-size: 1.05rem;
+  border: 1px solid #fecaca;
+}

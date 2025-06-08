@@ -1,0 +1,1 @@
+{"version":3,"file":"config-C9HfB2Xj.js","sources":["src/config.ts"],"sourcesContent":["export const API_BASE_URL = 'https://wallet-app-wlvr.onrender.com';\r\n// export const API_BASE_URL = 'http://localhost:3001';\r\n"],"names":[],"mappings":"AAAO,MAAM,YAAY,GAAG;AAC5B;;;;"}

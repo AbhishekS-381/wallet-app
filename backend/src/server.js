@@ -14,6 +14,10 @@ app.use(cors());
 app.use(walletRoutes);
 app.use(transactionRoutes);
 
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 async function startServer() {
   try {
     await database.connect();

@@ -23,4 +23,6 @@ Thumbs.db
 
 # Misc
 .env
+*.env.*
 *.local
+to-do.md
