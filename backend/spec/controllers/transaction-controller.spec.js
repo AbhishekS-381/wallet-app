@@ -31,9 +31,29 @@ describe('controllers/transaction-controller', () => {
 
   it('getTransactions: should return transactions', async () => {
     req.query = { walletId: '1' };
-    transactionService.getTransactions.mockResolvedValue([{ _id: 'tx1' }]);
+    transactionService.getTransactions.mockResolvedValue([
+      {
+        id: 'tx1',
+        walletId: '1',
+        amount: 100,
+        balance: 100,
+        description: 'desc',
+        date: new Date(),
+        type: 'Credit',
+      }
+    ]);
     await transactionController.getTransactions(req, res);
-    expect(res.json).toHaveBeenCalledWith([{ id: 'tx1' }]);
+    expect(res.json).toHaveBeenCalledWith([
+      {
+        id: 'tx1',
+        walletId: '1',
+        amount: 100,
+        balance: 100,
+        description: 'desc',
+        date: expect.any(Date),
+        type: 'Credit',
+      }
+    ]);
   });
 
   it('getTransactions: should handle service error', async () => {

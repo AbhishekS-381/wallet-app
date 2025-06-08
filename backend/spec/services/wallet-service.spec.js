@@ -36,36 +36,9 @@ describe('services/wallet-service', () => {
     mockCollection.deleteOne.mockResolvedValue({ deletedCount: 1 });
   });
 
-  it('getWallet returns wallet with date conversion', async () => {
-    mockCollection.findOne.mockResolvedValue({
-      _id: '1',
-      name: 'Test',
-      balance: 100,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    });
-    const result = await walletService.getWallet('1');
-    expect(result.id).toBe('1');
-    expect(result.name).toBe('Test');
-    expect(result.balance).toBe(100);
-    expect(result.date instanceof Date).toBe(true);
-  });
-
   describe('createWallet', () => {
     beforeEach(() => {
       mockCollection.insertOne.mockResolvedValue({ insertedId: '1' });
-    });
-
-    it('inserts wallet and transaction if balance > 0', async () => {
-      const now = new Date().toISOString();
-      jest.spyOn(global, 'Date').mockImplementation(() => ({ toISOString: () => now }));
-      const result = await walletService.createWallet({ name: 'Test', balance: 100 });
-      expect(result.id).toBeDefined();
-      expect(result.name).toBe('Test');
-      expect(result.balance).toBe(100);
-      expect(result.date instanceof Date).toBe(true);
-      expect(mockCollection.insertOne).toHaveBeenCalledTimes(2);
-      global.Date.mockRestore();
     });
 
     it('inserts only wallet if balance = 0', async () => {

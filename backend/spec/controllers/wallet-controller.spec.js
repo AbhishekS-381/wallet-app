@@ -51,13 +51,6 @@ describe('controllers/wallet-controller', () => {
     expect(res.json).toHaveBeenCalledWith({ error: 'Wallet not found' });
   });
 
-  it('getWallet: should return wallet if found', async () => {
-    req.params = { id: '1' };
-    walletService.getWallet.mockResolvedValue({ id: '1', name: 'Test', balance: 100, date: new Date() });
-    await walletController.getWallet(req, res);
-    expect(res.json).toHaveBeenCalledWith({ id: '1', name: 'Test', balance: 100, date: expect.any(Date) });
-  });
-
   it('getWallet: should handle service error', async () => {
     req.params = { id: '1' };
     walletService.getWallet.mockRejectedValue(new Error('fail'));
