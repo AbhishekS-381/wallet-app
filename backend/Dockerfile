@@ -1,6 +1,6 @@
 FROM node:18-slim
 WORKDIR /app
-COPY package.json package-lock.json ./
+COPY package.json ./
 RUN npm install --omit=dev && npm audit fix --force
 COPY . .
 EXPOSE 3001
